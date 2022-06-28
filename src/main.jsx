@@ -2,45 +2,35 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
-function Square(props) {
+const Square = ({value, onClick}) => {
   return (
-    <button className="square" onClick={props.onClick}>
-      {props.value}
+    <button className="square" onClick={onClick}>
+      {value}
     </button>
   );
 }
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
+const  Board = ({squares, onClick}) => {    
+  const array = [[0,1,2], [3,4,5], [6,7,8]];  
+  return (
+    <div>
+      {array[0].map(element => {
+        return (
+          <div className="board-row" key={element.toString()}>
+          {array[element].map(i=> {
+            return (
+              <Square
+                key={i.toString()}
+                value={squares[i]}
+                onClick={() => onClick(i)}
+              />
+            )
+          })}
         </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
+        )
+      })}
+    </div>
+  );
 }
 
 class Game extends React.Component {
